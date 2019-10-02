@@ -38,4 +38,5 @@ passport.deserializeUser((id, done) => {
         })
 })
 
+app.use('/', express.static(path.join(__dirname, config.pathToStatic())))
 app.use('/api', routes)
