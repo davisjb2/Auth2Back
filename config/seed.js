@@ -1,7 +1,7 @@
 const { sequelize } = require('../models')
 const User = sequelize.models.User
 
-seed = async() => {
+seed = async () => {
     try {
         await User.create({ username: 'user', password: 'pass'})
     } catch(e) {
@@ -9,6 +9,4 @@ seed = async() => {
     }
 }
 
-module.exports = {
-    seed
-}
+module.exports = seed

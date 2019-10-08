@@ -24,6 +24,4 @@ const TaskModel = (sequelize, DataTypes) => {
     return Task
 }
 
-module.exports = {
-    TaskModel
-}
+module.exports = TaskModel

@@ -15,9 +15,8 @@ const routes = require('./routes')
 const app = express()
 
 app.use(connectHistoryApi())
-app.use(express)
 
-app.use('/', express.static(path.join(__dirname, config.pathToStatic())))
+app.use('/', express.static(path.join(__dirname, config.pathToStatic)))
 app.use('/', (req, res, next) => {
     console.log(req.method)
     console.log(req.originalUrl)
@@ -25,9 +24,9 @@ app.use('/', (req, res, next) => {
 })
 
 app.use(bodyparser.json())
-app.use(cookieParser)
+app.use(cookieParser())
 app.use(session({ secret: config.sessionSecret, resave: true, saveUninitialized: false }))
-app.use(cors, ({
+app.use(cors({
     origin: [
         'http://localhost:8080'
     ],

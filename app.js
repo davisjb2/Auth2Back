@@ -8,6 +8,7 @@ sequelize.sync({ force: argv.force })
     .then(() => {
         seed()
     }).then(() => {
+        console.log(require('path').join(__dirname, config.pathToStatic))
         console.log('---------------')
         app.listen(config.port)
         console.log(`server started on port ${config.port}`)
