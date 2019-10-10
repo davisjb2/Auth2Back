@@ -2,6 +2,11 @@ const router = new require('express').Router()
 const { sequelize } = require('../models/')
 const User = sequelize.models.User
 
+router.use('/', (req, res, next) => {
+    console.log('auth router')
+    next()
+})
+
 router.post('/register', async (req, res) => {
     try {
         const user = await User.create(req.body.username, req.body.password)

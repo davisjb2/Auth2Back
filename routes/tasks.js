@@ -24,13 +24,45 @@ router.get('/', async (req, res) => {
 router.post('/create', async (req, res) => {
     try {
         const user = await User.findByPk(req.user.id)
-        const task = await Task.create({
-            name: req.body.name,
-            completed: req.body.completed,
-            dueDate: req.body.dueDate,
-            
-        })
-        return res.status(200).send({ status: 200, result: tasks})
+        console.log(user)
+        const task = await Task.create(req.body)
+        await user.addTask(task)
+        return res.status(200).send({ status: 200, result: task})
+    } catch (e) {
+        return res.status(200).send({ status: 500, result: undefined, error: e.message})
+    }
+})
+
+
+router.post('/update/:id', async (req, res) => {
+    try {
+        const task = await Task.findByPk(id)
+        if(task == null || task == undefined)
+        {
+            throw new Error(`No Task with id ${id}`)
+        }
+        if(req.user.id == task.getUser().id)
+        {
+            await task.update(req.body)
+        }
+        return res.status(200).send({ status: 200, result: undefined})
+    } catch (e) {
+        return res.status(200).send({ status: 500, result: undefined, error: e.message})
+    }
+})
+
+router.post('/delete/:id', async (req, res) => {
+    try {
+        const task = await Task.findByPk(id)
+        if(task == null || task == undefined)
+        {
+            throw new Error(`No Task with id ${id}`)
+        }
+        if(req.user.id == task.getUser().id)
+        {
+            await task.destroy()
+        }
+        return res.status(200).send({ status: 200, result: undefined})
     } catch (e) {
         return res.status(200).send({ status: 500, result: undefined, error: e.message})
     }

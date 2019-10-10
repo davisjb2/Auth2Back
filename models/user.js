@@ -20,7 +20,7 @@ const UserModel = (sequelize, DataTypes) => {
             beforeCreate: hashPassword
         }
     })
-    User.prototype.comparePassword = (password) => {
+    User.prototype.comparePassword = function (password) {
         return bycrypt.compareSync(password, this.password)
     }
     return User
