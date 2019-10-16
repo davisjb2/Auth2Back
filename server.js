@@ -12,6 +12,8 @@ const { sequelize } = require('./models')
 const User = sequelize.models.User
 const routes = require('./routes')
 
+const SequelizeStore = require('connect-session-sequelize')(session.Store);
+
 const app = express()
 
 app.use(connectHistoryApi())
@@ -25,7 +27,11 @@ app.use('/', (req, res, next) => {
 
 app.use(bodyparser.json())
 app.use(cookieParser())
-app.use(session({ secret: config.sessionSecret, resave: true, saveUninitialized: false }))
+app.use(session({ secret: config.sessionSecret, resave: true, saveUninitialized: false, store: 
+    new SequelizeStore({
+        db: config.db
+    })
+}))
 app.use(cors({
     origin: [
         'http://localhost:8080'
