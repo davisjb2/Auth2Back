@@ -27,7 +27,7 @@ app.use('/', (req, res, next) => {
 
 app.use(bodyparser.json())
 app.use(cookieParser())
-app.use(session({ secret: config.sessionSecret, resave: true, saveUninitialized: false, store: 
+app.use(session({ secret: config.sessionSecret, resave: false, saveUninitialized: false, store: 
     new SequelizeStore({
         db: config.db
     })
