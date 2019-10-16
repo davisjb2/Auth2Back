@@ -29,7 +29,7 @@ app.use(bodyparser.json())
 app.use(cookieParser())
 app.use(session({ secret: config.sessionSecret, resave: false, saveUninitialized: false, store: 
     new SequelizeStore({
-        db: config.db
+        db: sequelize
     })
 }))
 app.use(cors({
