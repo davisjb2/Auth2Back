@@ -36,10 +36,10 @@ router.post('/create', async (req, res) => {
 
 router.post('/update/:id', async (req, res) => {
     try {
-        const task = await Task.findByPk(id)
+        const task = await Task.findByPk(req.params.id)
         if(task == null || task == undefined)
         {
-            throw new Error(`No Task with id ${id}`)
+            throw new Error(`No Task with id ${req.params.id}`)
         }
         if(req.user.id == task.getUser().id)
         {
