@@ -6,8 +6,7 @@ const TaskModel = (sequelize, DataTypes) => {
     class Task extends Model {}
     Task.init({
         name: {
-            type: DataTypes.STRING,
-            unique: true
+            type: DataTypes.STRING
         },
         dueDate: {
             type: DataTypes.DATE,
