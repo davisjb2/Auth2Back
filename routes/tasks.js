@@ -44,8 +44,8 @@ router.post('/update/:id', async (req, res) => {
         if(req.user.id == task.getUser().id)
         {
             await task.update(req.body)
+            console.log(task)
         }
-        console.log(req.body)
         return res.status(200).send({ status: 200, result: task})
     } catch (e) {
         return res.status(200).send({ status: 500, result: undefined, error: e.message})
