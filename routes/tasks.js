@@ -41,6 +41,8 @@ router.post('/update/:id', async (req, res) => {
         {
             throw new Error(`No Task with id ${req.params.id}`)
         }
+        console.log("User id: ", req.user.id)
+        console.log("Task user id: ", task.getUser().id)
         if(req.user.id == task.getUser().id)
         {
             await task.update(req.body)
