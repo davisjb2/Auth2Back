@@ -45,7 +45,7 @@ router.post('/update/:id', async (req, res) => {
         {
             await task.update(req.body)
         }
-        return res.status(200).send({ status: 200, result: undefined})
+        return res.status(200).send({ status: 200, result: task})
     } catch (e) {
         return res.status(200).send({ status: 500, result: undefined, error: e.message})
     }
