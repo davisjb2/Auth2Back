@@ -34,7 +34,7 @@ app.use(session({ secret: config.sessionSecret, resave: false, saveUninitialized
 }))
 app.use(cors({
     origin: [
-        'http://localhost:8080'
+        'https://murmuring-atoll-93655.herokuapp.com/'
     ],
     credentials: true
 }))
