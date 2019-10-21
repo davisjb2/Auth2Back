@@ -17,7 +17,7 @@ router.post('/register', async (req, res) => {
         })
         return res.status(200).send({ status: 200, result: { username: user.username }})
     } catch(e) {
-        return res.status(200).send({ status: 500, result: undefined, error: e.message,  })
+        return res.status(200).send({ status: 500, result: undefined, error: e.message  })
     }
 })
 
@@ -36,6 +36,22 @@ router.post('/login', async (req, res) => {
         return res.status(200).send({ status: 200, result: { username: user.username }})
     } catch(e) {
         return res.status(200).send({ status: 500, result: undefined, error: e.message,  })
+    }
+})
+
+
+router.post('/update', async (req, res) => {
+    try {
+        const user = await User.findByPk(req.user.id)
+        if(user == null || user == undefined)
+        {
+            throw new Error(`No User with id ${req.user.id}`)
+        }
+        await user.update(req.body)
+        console.log(task)
+        return res.status(200).send({ status: 200, result: user})
+    } catch (e) {
+        return res.status(200).send({ status: 500, result: undefined, error: e.message})
     }
 })
 
