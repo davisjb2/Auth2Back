@@ -1,5 +1,6 @@
 const router = new require('express').Router()
 const { sequelize } = require('../models/')
+const bcrypt = require('bcryptjs')
 const User = sequelize.models.User
 
 router.use('/', (req, res, next) => {
@@ -15,9 +16,9 @@ router.post('/register', async (req, res) => {
                 throw e
             }
         })
-        return res.status(200).send({ status: 200, result: { username: user }})
+        return res.status(200).send({ status: 200, result: user })
     } catch(e) {
-        return res.status(200).send({ status: 500, result: undefined, error: e.message  })
+        return res.status(200).send({ status: 500, result: undefined, error: e.message })
     }
 })
 
@@ -33,9 +34,9 @@ router.post('/login', async (req, res) => {
                 throw e
             }
         })
-        return res.status(200).send({ status: 200, result: { username: user }})
+        return res.status(200).send({ status: 200, result: user })
     } catch(e) {
-        return res.status(200).send({ status: 500, result: undefined, error: e.message,  })
+        return res.status(200).send({ status: 500, result: undefined, error: e.message })
     }
 })
 
@@ -47,11 +48,15 @@ router.post('/update', async (req, res) => {
         {
             throw new Error(`No User with id ${req.user.id}`)
         }
-        await user.update(req.body)
+        await user.update({ firstName: req.body.firstName, lastName: req.body.lastName, email: req.body.email })
+        if(req.user.password)
+        {
+            user.setDataValue('password', bcrypt.hashSync(user.password))
+        }
         console.log(user)
         return res.status(200).send({ status: 200, result: user})
     } catch (e) {
-        return res.status(200).send({ status: 500, result: undefined, error: e.message})
+        return res.status(200).send({ status: 500, result: undefined, error: e.message })
     }
 })
 

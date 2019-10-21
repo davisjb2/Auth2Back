@@ -19,8 +19,7 @@ const UserModel = (sequelize, DataTypes) => {
         sequelize,
         modelName: 'User',
         hooks: {
-            beforeCreate: hashPassword,
-            beforeUpdate: hashPassword
+            beforeCreate: hashPassword
         }
     })
     User.prototype.comparePassword = function (password) {
