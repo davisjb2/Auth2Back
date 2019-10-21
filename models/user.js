@@ -8,16 +8,19 @@ const hashPassword = (user, options) => {
 const UserModel = (sequelize, DataTypes) => {
     class User extends Model {}
     User.init({
-        username: {
-            type: DataTypes.STRING,
+        firstName: DataTypes.STRING(256),
+        lastName: DataTypes.STRING(256),
+        password: DataTypes.STRING(256),
+        email: {
+            type: DataTypes.STRING(256),
             unique: true
-        },
-        password: DataTypes.STRING(256)
+        }
     }, {
         sequelize,
         modelName: 'User',
         hooks: {
-            beforeCreate: hashPassword
+            beforeCreate: hashPassword,
+            beforeUpdate: hashPassword
         }
     })
     User.prototype.comparePassword = function (password) {

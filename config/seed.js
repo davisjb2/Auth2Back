@@ -3,7 +3,7 @@ const User = sequelize.models.User
 
 seed = async () => {
     try {
-        await User.create({ username: 'user', password: 'pass'})
+        await User.create({ email: 'user', password: 'pass'})
     } catch(e) {
         console.log(e)
     }

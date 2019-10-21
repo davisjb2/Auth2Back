@@ -4,7 +4,7 @@ module.exports = {
     port: process.env.PORT || 8081,
     db: {
         name: 'db',
-        username: 'username',
+        username: 'email',
         password: 'password',
         options: {
             dialect: 'sqlite',

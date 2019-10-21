@@ -9,13 +9,13 @@ router.use('/', (req, res, next) => {
 
 router.post('/register', async (req, res) => {
     try {
-        const user = await User.create(req.body.username, req.body.password)
+        const user = await User.create(req.body)
         req.login(user, (e) => {
             if(e) {
                 throw e
             }
         })
-        return res.status(200).send({ status: 200, result: { username: user.username }})
+        return res.status(200).send({ status: 200, result: { username: user }})
     } catch(e) {
         return res.status(200).send({ status: 500, result: undefined, error: e.message  })
     }
@@ -23,7 +23,7 @@ router.post('/register', async (req, res) => {
 
 router.post('/login', async (req, res) => {
     try {
-        const user = await User.findOne({ where: { username: req.body.username }})
+        const user = await User.findOne({ where: { email: req.body.email }})
         if(!user.comparePassword(req.body.password))
         {
             throw new Error("Password Incorrect")
@@ -33,7 +33,7 @@ router.post('/login', async (req, res) => {
                 throw e
             }
         })
-        return res.status(200).send({ status: 200, result: { username: user.username }})
+        return res.status(200).send({ status: 200, result: { username: user }})
     } catch(e) {
         return res.status(200).send({ status: 500, result: undefined, error: e.message,  })
     }
@@ -48,7 +48,7 @@ router.post('/update', async (req, res) => {
             throw new Error(`No User with id ${req.user.id}`)
         }
         await user.update(req.body)
-        console.log(task)
+        console.log(user)
         return res.status(200).send({ status: 200, result: user})
     } catch (e) {
         return res.status(200).send({ status: 500, result: undefined, error: e.message})
