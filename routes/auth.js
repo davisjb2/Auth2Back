@@ -69,4 +69,13 @@ router.get('/logout', async (req, res) => {
     }
 })
 
+router.get('/reauth', async (req, res) => {
+    try {
+        const user = await User.findByPk(req.user.id)
+        return res.status(200).send({ status: 200, result: user })
+    } catch (e) {
+        return res.status(204).send({ status: 204, result: undefined, error: e })
+    }
+})
+
 module.exports = router
